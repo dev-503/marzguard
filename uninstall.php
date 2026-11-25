@@ -15,7 +15,12 @@ $options = array(
 	'marzgard_retention_log',
 	'dot_settings',
 	'dot_bale_settings',
-	'pwsms_sms_main_settings',
+	'sms_main_settings',
+	'sms_super_admin_settings',
+	'sms_buyer_settings',
+	'sms_notif_settings',
+	'sms_product_admin_settings',
+	'sms_order_pattern_settings',
 	'xcart_installer_redirect',
 );
 foreach ( $options as $option ) {

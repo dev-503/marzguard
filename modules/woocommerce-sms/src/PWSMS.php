@@ -38,6 +38,7 @@ class PWSMS {
 		new MetaBox();
 		new ProductTab();
 		new Orders();
+		new OrderPattern();
 		new Archive();
 		new Contacts();
 		new Vendors();

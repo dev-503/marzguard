@@ -64,7 +64,7 @@ class Settings {
 			return;
 		}
 
-		if ( in_array( $tab, [ 'buyer', 'product_admin', 'super_admin', 'notif' ] ) ) {
+		if ( in_array( $tab, [ 'buyer', 'product_admin', 'super_admin', 'notif', 'order_pattern' ] ) ) {
 			wp_enqueue_script( 'pwsms-shortcode-buttons', PWSMS_URL . '/assets/js/shortcode-buttons.js', [ 'jquery' ], PWSMS_VERSION, true );
 
 			wp_localize_script( 'pwsms-shortcode-buttons', 'pwsms_shortcodes', self::shortcodes() );
