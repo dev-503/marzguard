@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>پیش نمایش تنظیمات — مرزگارد</title>
+  <link rel="stylesheet" href="../frontend/dist/marzgard-admin.css">
+  <style>body{margin:0;background:#eef1f3;padding:28px;font-family:'Arad',sans-serif}</style>
+</head>
+<body>
+  <div id="marzgard-admin-app" class="marzgard-admin-mount"></div>
+  <script>window.MARZGARD={restUrl:'/marzgard/v1',nonce:'preview',assetsUrl:'../assets/',version:'1.0.0',isAdmin:true,demosUrl:'preview.html'};</script>
+  <script src="../frontend/dist/vendor/vue.global.prod.js"></script>
+  <script>
+    var settings = {
+      brand_name:'مرزگارد', brand_tagline:'ورود امن به حساب کاربری', auth_mode:'login_register',
+      default_role:'subscriber', redirect_url:'', replace_wp_login:0, enable_register:1,
+      sms_gateway:'rest', sms_provider:'log', sms_endpoint:'https://api.example.com/send', sms_method:'POST',
+      sms_headers:'{"Content-Type":"application/json"}', sms_body:'{"to":"{to}","text":"{message}"}',
+      sms_success_path:'data.success', sms_api_key:'', sms_sender:'', sms_template:'کد تأیید مرزگارد: {code}',
+      otp_length:6, otp_ttl:300, max_send_per_hour:5, max_verify_tries:5, dev_expose_otp:0,
+      primary_color:'#009595', radius:12, dark_mode:'auto', font_size:14,
+      roles:[{key:'subscriber',name:'مشترک'},{key:'editor',name:'ویرایشگر'},{key:'administrator',name:'مدیر'}]
+    };
+    var providers = {
+      log:'ثبت در لاگ (توسعه)', melipayamak:'ملی پیامک', faraz:'فراز اس ام اس',
+      kavenegar:'کاوه نگار', smsir:'اس ام اس دات آی آر', custom:'REST سفارشی',
+      'pwsms:DemoGateway':'درگاه نمونه (پیامک ووکامرس)'
+    };
+    window.fetch = function(url, opts){
+      var path = String(url || '');
+      var method = (opts && opts.method) || 'GET';
+      function reply(data, ok){ return Promise.resolve({ ok: ok !== false, status: ok === false ? 400 : 200, json: function(){ return Promise.resolve(data); } }); }
+      if (path.indexOf('/sms/providers') !== -1) { return reply(providers); }
+      if (path.indexOf('/security/log') !== -1 || path.indexOf('/retention/log') !== -1) { return reply([]); }
+      if (path.indexOf('/settings') !== -1) {
+        if (method === 'GET') { return reply(Object.assign({}, settings, { success:true })); }
+        return reply({ success:true, message:'تنظیمات ذخیره شد.' });
+      }
+      return reply({ success:true, message:'انجام شد' });
+    };
+  </script>
+  <script src="../frontend/dist/marzgard-admin.js"></script>
+</body>
+</html>

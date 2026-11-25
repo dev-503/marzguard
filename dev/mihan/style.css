@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'Arad';
+  src: url('assets/fonts/AradFDVF.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root { --mi-green: #16895f; --mi-green-dark: #0f6b4a; --mi-bg: #141517; --mi-panel: #1d1f22; --mi-line: #33363b; --mi-text: #f2f0e9; --mi-muted: #969a9f; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--mi-bg); color: var(--mi-text); font-family: 'Arad', 'Segoe UI', Tahoma, sans-serif; }
+
+.mi-page { max-width: 440px; min-height: 100vh; margin: 0 auto; padding: 20px 22px 40px; display: flex; flex-direction: column; }
+
+.mi-head { display: flex; align-items: flex-start; justify-content: space-between; }
+.mi-theme { width: 38px; height: 38px; border: 1px solid #3a3d42; border-radius: 50%; background: transparent; color: #ddd; display: grid; place-items: center; cursor: pointer; }
+.mi-theme svg { width: 20px; height: 20px; }
+.mi-brand { display: flex; align-items: center; gap: 10px; }
+.mi-brand__text { font-size: 19px; font-weight: 800; line-height: 1.1; text-align: right; }
+.mi-brand__text small { display: block; font-size: 9px; letter-spacing: 3px; color: #b9bdc2; font-weight: 500; }
+.mi-brand__mark { width: 42px; height: 42px; color: #fff; }
+.mi-brand__mark svg { width: 100%; height: 100%; }
+
+.mi-card { margin-top: 110px; }
+.mi-body { text-align: right; }
+.mi-title { font-size: 22px; font-weight: 800; text-align: center; margin: 0 0 14px; }
+.mi-subtitle { font-size: 12px; color: var(--mi-muted); text-align: center; line-height: 1.8; margin: 0 0 36px; }
+.mi-subtitle b { color: var(--mi-text); }
+.mi-label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+
+.mi-phone { display: flex; align-items: center; gap: 8px; height: 50px; padding: 0 14px; background: var(--mi-panel); border: 1px solid var(--mi-line); border-radius: 8px; transition: border-color 150ms, box-shadow 150ms; }
+.mi-phone:focus-within { border-color: var(--mi-green); box-shadow: 0 0 0 3px rgba(22,137,95,0.18); }
+.mi-phone--error { border-color: #e5484d; }
+.mi-phone input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; color: var(--mi-text); font: inherit; font-size: 14px; font-variant-numeric: tabular-nums; padding: 0; }
+.mi-phone input::placeholder { color: #73777d; }
+.mi-phone__icon { color: #a9adb2; display: grid; place-items: center; }
+.mi-phone__icon svg { width: 18px; height: 18px; }
+
+.mi-hint, .mi-error { font-size: 10.5px; margin: 8px 0 0; color: var(--mi-muted); }
+.mi-error { color: #ff6b6b; }
+
+.mi-btn { width: 100%; height: 48px; margin-top: 28px; border: 0; border-radius: 8px; background: var(--mi-green); color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 150ms; }
+.mi-btn:hover { background: var(--mi-green-dark); }
+.mi-btn__arrow { font-size: 18px; line-height: 1; }
+
+.mi-otp { display: flex; gap: 7px; direction: ltr; justify-content: center; }
+.mi-otp__cell { width: 44px; height: 50px; text-align: center; font: inherit; font-size: 20px; font-weight: 700; color: var(--mi-text); background: var(--mi-panel); border: 1px solid var(--mi-line); border-radius: 8px; outline: 0; }
+.mi-otp__cell:focus { border-color: var(--mi-green); box-shadow: 0 0 0 3px rgba(22,137,95,0.18); }
+.mi-demo-code { font-size: 11px; color: var(--mi-muted); text-align: center; margin-top: 14px; }
+.mi-demo-code b { color: var(--mi-green); }
+.mi-actions { display: flex; justify-content: space-between; margin-top: 20px; }
+.mi-link { border: 0; background: none; color: var(--mi-green); font: inherit; font-size: 11.5px; cursor: pointer; }
+.mi-link:disabled { color: var(--mi-muted); cursor: default; }
+
+.mi-back { display: block; text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--mi-line); color: var(--mi-muted); font-size: 11px; text-decoration: none; }
+.mi-back:hover { color: var(--mi-text); }
+.mi-success { padding-top: 30px; }
+
+@media (max-width: 400px) { .mi-otp__cell { width: 38px; height: 46px; font-size: 18px; } }

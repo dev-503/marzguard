@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>دمو ورود تکنولایف</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <main class="tl-page">
+      <header class="tl-head">
+        <button class="tl-back" type="button" @click="reset" aria-label="بازگشت">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="tl-logo">
+          <span class="tl-logo__text">تکنو<br>لایف</span>
+          <span class="tl-logo__mark"><svg viewBox="0 0 40 40" fill="none"><path d="M7 25c6-11 18-16 27-14" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><path d="M11 31c7-9 16-13 23-12" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity=".85"/></svg></span>
+        </div>
+      </header>
+
+      <form v-if="step === 'identity'" @submit.prevent="sendCode" class="tl-body">
+        <div class="tl-tabs">
+          <button type="button" :class="{ 'is-active': tab === 'login' }" @click="tab = 'login'">ورود</button>
+          <span></span>
+          <button type="button" :class="{ 'is-active': tab === 'register' }" @click="tab = 'register'">ثبت نام</button>
+        </div>
+
+        <h1 class="tl-greeting">خوش آمدید :)</h1>
+
+        <label class="tl-label" for="tl-phone">شماره موبایل</label>
+        <div class="tl-phone" dir="rtl" :class="{ 'tl-phone--error': error }">
+          <span class="tl-phone__addon" dir="ltr"><span class="tl-phone__flag">🇮🇷</span> +98 <span class="tl-phone__iso">IR</span></span>
+          <input id="tl-phone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel-national" placeholder="912 345 6789" :value="formatted" @input="onPhoneInput" :aria-invalid="error ? true : undefined">
+          <svg v-if="valid" class="tl-phone__check" viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="tl-error" v-if="error">{{ error }}</p>
+        <p class="tl-hint" v-else-if="operator">اپراتور: {{ operator }}</p>
+        <p class="tl-hint" v-else>بدون صفر اول هم می‌توانید وارد کنید</p>
+
+        <button class="tl-btn" type="submit">ادامه</button>
+
+        <p class="tl-terms">با ورود به سایت، شما <a href="#">شرایط و مقررات</a> و <a href="#">قوانین حریم خصوصی</a> تکنولایف را می پذیرید.</p>
+      </form>
+
+      <form v-else-if="step === 'otp'" @submit.prevent="verify" class="tl-body">
+        <h1 class="tl-greeting">کد تأیید</h1>
+        <p class="tl-subtitle">کد ۶ رقمی ارسال شده به <b dir="ltr">{{ masked }}</b> را وارد کنید</p>
+        <div class="tl-otp" @paste="onPaste">
+          <input v-for="(digit, i) in code" :key="i" :ref="function(el){ cells[i] = el }" class="tl-otp__cell" type="text" inputmode="numeric" maxlength="1" dir="ltr" :value="digit" @input="onInput(i, $event)" @keydown="onKeydown(i, $event)">
+        </div>
+        <p class="tl-error" v-if="error">{{ error }}</p>
+        <p class="tl-demo-code" v-if="demoCode">کد دمو: <b dir="ltr">{{ demoCode }}</b></p>
+        <button class="tl-btn" type="submit">تایید و ورود</button>
+        <div class="tl-actions">
+          <button type="button" class="tl-link" @click="reset">ویرایش شماره</button>
+          <button type="button" class="tl-link" :disabled="countdown > 0" @click="resend">{{ countdown > 0 ? 'ارسال مجدد تا ' + countdown + ' ثانیه' : 'ارسال مجدد کد' }}</button>
+        </div>
+      </form>
+
+      <div v-else class="tl-body tl-success">
+        <div class="tl-success__icon"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h1 class="tl-greeting">با موفقیت وارد شدید</h1>
+        <button class="tl-btn" type="button" @click="reset">بازگشت</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="vendor/vue.global.prod.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

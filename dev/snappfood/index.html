@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>دمو ورود اسنپ فود</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <main class="sf-page">
+      <button class="sf-back" type="button" @click="reset" aria-label="بازگشت">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <form v-if="step === 'identity'" @submit.prevent="sendCode" class="sf-body">
+        <h1 class="sf-title">ورود به حساب کاربری</h1>
+        <p class="sf-subtitle">برای ادامه، شماره موبایل خود را وارد کنید.</p>
+
+        <label class="sf-label" for="sf-phone">موبایل</label>
+        <div class="sf-phone" dir="rtl" :class="{ 'sf-phone--error': error }">
+          <span class="sf-phone__addon" dir="ltr"><span class="sf-phone__flag">🇮🇷</span> +98 <span class="sf-phone__iso">IR</span></span>
+          <input id="sf-phone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel-national" placeholder="912 345 6789" :value="formatted" @input="onPhoneInput" :aria-invalid="error ? true : undefined">
+          <svg v-if="valid" class="sf-phone__check" viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="sf-error" v-if="error">{{ error }}</p>
+        <p class="sf-hint" v-else-if="operator">اپراتور: {{ operator }}</p>
+
+        <p class="sf-terms">با ادامه دادن، شما <a href="#">شرایط و قوانین</a> و <a href="#">قوانین حریم خصوصی</a> اسنپ فود را می پذیرید.</p>
+
+        <div class="sf-footer">
+          <button class="sf-btn" type="submit" :class="{ 'sf-btn--active': valid }" :disabled="!valid">ادامه</button>
+        </div>
+      </form>
+
+      <form v-else-if="step === 'otp'" @submit.prevent="verify" class="sf-body">
+        <h1 class="sf-title">کد تأیید</h1>
+        <p class="sf-subtitle">کد ۶ رقمی ارسال شده به <b dir="ltr">{{ masked }}</b> را وارد کنید</p>
+        <div class="sf-otp" @paste="onPaste">
+          <input v-for="(digit, i) in code" :key="i" :ref="function(el){ cells[i] = el }" class="sf-otp__cell" type="text" inputmode="numeric" maxlength="1" dir="ltr" :value="digit" @input="onInput(i, $event)" @keydown="onKeydown(i, $event)">
+        </div>
+        <p class="sf-error" v-if="error">{{ error }}</p>
+        <p class="sf-demo-code" v-if="demoCode">کد دمو: <b dir="ltr">{{ demoCode }}</b></p>
+        <div class="sf-actions">
+          <button type="button" class="sf-link" @click="reset">ویرایش شماره</button>
+          <button type="button" class="sf-link" :disabled="countdown > 0" @click="resend">{{ countdown > 0 ? 'ارسال مجدد تا ' + countdown + ' ثانیه' : 'ارسال مجدد کد' }}</button>
+        </div>
+        <div class="sf-footer">
+          <button class="sf-btn sf-btn--active" type="submit">تایید و ورود</button>
+        </div>
+      </form>
+
+      <div v-else class="sf-body sf-success">
+        <div class="sf-success__icon"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h1 class="sf-title">با موفقیت وارد شدید</h1>
+        <div class="sf-footer"><button class="sf-btn sf-btn--active" type="button" @click="reset">بازگشت</button></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="vendor/vue.global.prod.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

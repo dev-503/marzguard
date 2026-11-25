@@ -1,0 +1,113 @@
+/* پیگیری سفارشات دیارا — تم سفید و صورتی */
+.dot-wrap{
+	--dot-pink:#ec4899;
+	--dot-pink-dark:#be185d;
+	--dot-pink-soft:#fdf2f8;
+	--dot-pink-line:#fbcfe8;
+	--dot-ink:#4a1d35;
+	--dot-muted:#9d6b84;
+	max-width:760px;margin:0 auto;color:var(--dot-ink);position:relative;overflow-x:clip;
+	font-family:inherit;line-height:1.8;direction:rtl;text-align:right;
+}
+.dot-wrap *,.dot-wrap *::before,.dot-wrap *::after{box-sizing:border-box}
+.dot-card{
+	background:#fff;border:1px solid var(--dot-pink-line);border-radius:20px;
+	padding:26px;margin-bottom:18px;box-shadow:0 10px 30px -14px rgba(236,72,153,.35);
+}
+.dot-title{margin:0 0 4px;font-size:1.35rem;color:var(--dot-pink-dark)}
+.dot-sub{margin:0 0 16px;color:var(--dot-muted);font-size:.95rem}
+
+/* فرم */
+.dot-form{display:flex;gap:10px;flex-wrap:wrap}
+.dot-input{
+	flex:1 1 220px;min-width:0;height:50px;padding:0 16px;border:1.5px solid var(--dot-pink-line);
+	border-radius:14px;background:var(--dot-pink-soft);font:inherit;color:var(--dot-ink);outline:none;
+	transition:border-color .2s,box-shadow .2s,background .2s;text-align:center;letter-spacing:.5px;
+}
+.dot-input:focus{border-color:var(--dot-pink);background:#fff;box-shadow:0 0 0 4px rgba(236,72,153,.15)}
+.dot-input::placeholder{color:#c79ab1;letter-spacing:0}
+.dot-hp{position:absolute!important;top:0;inset-inline-start:0;width:1px!important;height:1px!important;padding:0!important;border:0!important;margin:0!important;opacity:0!important;overflow:hidden!important;clip-path:inset(50%);pointer-events:none}
+.dot-btn{
+	display:inline-flex;align-items:center;justify-content:center;height:50px;padding:0 28px;border:0;border-radius:14px;
+	background:linear-gradient(135deg,#f472b6,#ec4899 55%,#db2777);color:#fff!important;font:inherit;font-weight:700;
+	cursor:pointer;text-decoration:none!important;transition:transform .15s,box-shadow .2s,opacity .2s;
+	box-shadow:0 8px 18px -8px rgba(219,39,119,.6);
+}
+.dot-btn:hover{transform:translateY(-1px);box-shadow:0 12px 22px -8px rgba(219,39,119,.65)}
+.dot-btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.dot-btn--ghost{
+	background:#fff;color:var(--dot-pink-dark)!important;border:1.5px solid var(--dot-pink);box-shadow:none;height:44px;padding:0 20px;
+}
+.dot-btn--ghost:hover{background:var(--dot-pink-soft);box-shadow:none}
+.dot-error{margin:12px 0 0;padding:10px 14px;border-radius:12px;background:#fff1f2;color:#be123c;font-size:.92rem}
+
+/* سربرگ سفارش */
+.dot-order__head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.dot-order__num{font-weight:800;font-size:1.1rem}
+.dot-order__date{margin-inline-start:10px;color:var(--dot-muted);font-size:.9rem}
+.dot-badge{padding:4px 14px;border-radius:999px;background:var(--dot-pink-soft);color:var(--dot-pink-dark);border:1px solid var(--dot-pink-line);font-size:.88rem;font-weight:700}
+.dot-badge.is-failed,.dot-note.is-failed{background:#fff1f2;color:#be123c;border-color:#fecdd3}
+.dot-note{padding:12px 16px;border-radius:12px;background:var(--dot-pink-soft);color:var(--dot-pink-dark);margin:0 0 16px;font-size:.93rem}
+
+/* مراحل */
+.dot-steps{list-style:none;margin:0 0 6px;padding:0;display:flex;position:relative;direction:rtl}
+.dot-steps::before,.dot-steps::after{
+	content:"";position:absolute;top:23px;height:4px;border-radius:4px;inset-inline-start:12.5%;
+}
+.dot-steps::before{width:75%;background:var(--dot-pink-line)}
+.dot-steps::after{width:calc(var(--dot-p,0%) * 0.75);background:linear-gradient(270deg,#f472b6,#db2777);transition:width .8s ease}
+.dot-step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;gap:10px}
+.dot-step__dot{
+	width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#fff;
+	border:3px solid var(--dot-pink-line);color:#d9a5be;transition:all .3s;
+}
+.dot-step__label{font-size:.88rem;color:var(--dot-muted);font-weight:600;padding:0 4px}
+.dot-step.is-done .dot-step__dot{background:var(--dot-pink);border-color:var(--dot-pink);color:#fff}
+.dot-step.is-done .dot-step__label{color:var(--dot-ink)}
+.dot-step.is-current .dot-step__dot{border-color:var(--dot-pink);color:var(--dot-pink-dark);background:var(--dot-pink-soft);animation:dotPulse 2s infinite}
+.dot-step.is-current .dot-step__label{color:var(--dot-pink-dark);font-weight:800}
+@keyframes dotPulse{0%{box-shadow:0 0 0 0 rgba(236,72,153,.45)}70%{box-shadow:0 0 0 12px rgba(236,72,153,0)}100%{box-shadow:0 0 0 0 rgba(236,72,153,0)}}
+
+/* لوگوی سایت */
+.dot-logo{display:flex;justify-content:center;align-items:center;text-align:center;margin:0 0 18px;width:100%}
+.dot-logo a{display:flex;justify-content:center;align-items:center;margin:0 auto;text-decoration:none}
+.dot-logo__img{display:block;margin:0 auto;max-height:72px;width:auto;height:auto;max-width:220px;object-fit:contain}
+.dot-logo__text{font-size:1.5rem;font-weight:800;color:var(--dot-pink-dark)}
+
+/* باکس رهگیری شرکت حمل */
+.dot-track{margin-top:24px;padding:20px;border-radius:16px;background:var(--dot-pink-soft);border:1px dashed var(--dot-pink);display:flex;flex-direction:column;gap:16px}
+.dot-track__head{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
+.dot-track__logo{width:52px;height:52px;object-fit:contain;background:#fff;border-radius:12px;padding:6px;border:1px solid var(--dot-pink-line)}
+.dot-track__title{font-weight:800;color:var(--dot-pink-dark)}
+.dot-track__carrier{font-size:.85rem;color:var(--dot-muted)}
+.dot-track__row{display:flex;gap:12px;flex-wrap:wrap}
+.dot-track__field{flex:1 1 200px;background:#fff;border:1px solid var(--dot-pink-line);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:2px}
+.dot-track__k{font-size:.78rem;color:var(--dot-muted)}
+.dot-track__v{font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dot-btn--block{width:100%}
+.dot-code{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.5px;direction:ltr;unicode-bidi:isolate}
+.dot-copy{border:1px solid var(--dot-pink);background:#fff;color:var(--dot-pink-dark);border-radius:8px;padding:0 10px;font:inherit;font-size:.78rem;cursor:pointer;height:26px}
+.dot-copy:hover{background:var(--dot-pink);color:#fff}
+.dot-account-title{color:var(--dot-pink-dark);font-size:1.2rem}
+
+/* موبایل: مراحل عمودی */
+@media (max-width:560px){
+	.dot-card{padding:18px;border-radius:16px}
+	.dot-steps{flex-direction:column;gap:0;padding-inline-start:4px}
+	.dot-steps::before,.dot-steps::after{display:none}
+	.dot-step{flex-direction:row;text-align:start;gap:14px;padding-bottom:18px}
+	.dot-step:not(:last-child)::after{
+		content:"";position:absolute;inset-inline-start:23px;top:50px;bottom:0;width:3px;background:var(--dot-pink-line);border-radius:3px;
+	}
+	.dot-step.is-done:not(:last-child)::after{background:var(--dot-pink)}
+	.dot-step__dot{width:46px;height:46px;flex:none}
+	.dot-btn{width:100%}
+}
+
+/* وسط‌چین قطعی (مقاوم در برابر استایل پوسته) */
+.dot-wrap .dot-logo{display:flex!important;justify-content:center!important;align-items:center!important;text-align:center!important;width:100%!important;float:none!important}
+.dot-wrap .dot-logo a{display:flex!important;justify-content:center!important;margin:0 auto!important;float:none!important}
+.dot-wrap .dot-logo img{display:block!important;margin:0 auto!important;float:none!important}
+.dot-wrap .dot-track__head{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;width:100%!important}
+.dot-wrap .dot-track__head>div{text-align:center!important;width:100%!important}
+.dot-wrap .dot-track__logo{margin:0 auto!important;display:block!important}

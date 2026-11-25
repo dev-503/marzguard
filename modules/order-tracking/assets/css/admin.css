@@ -1,0 +1,18 @@
+/* متاباکس سفارش */
+.dot-mb__label{margin:12px 0 6px;font-weight:600}
+.dot-mb__date{padding:8px 10px;background:#fdf2f8;border:1px solid #fbcfe8;border-radius:6px;color:#831843;font-size:12px}
+.dot-carriers{display:flex;gap:8px;flex-wrap:wrap}
+.dot-carrier input{position:absolute;opacity:0;pointer-events:none}
+.dot-carrier__box{
+	display:flex;align-items:center;gap:8px;padding:8px 14px;border:2px solid #e5e7eb;border-radius:10px;
+	cursor:pointer;background:#fff;font-weight:600;transition:all .15s;
+}
+.dot-carrier__box img{width:28px;height:28px;object-fit:contain}
+.dot-carrier input:checked + .dot-carrier__box{border-color:#ec4899;background:#fdf2f8;color:#9d174d}
+.dot-carrier input:focus-visible + .dot-carrier__box{box-shadow:0 0 0 3px rgba(236,72,153,.3)}
+
+/* صفحه تنظیمات */
+.dot-panel{background:#fff;border:1px solid #fbcfe8;border-radius:12px;padding:8px 24px 20px;margin:16px 0;max-width:820px}
+.dot-panel h2{color:#9d174d}
+.dot-progress__bar{height:12px;background:#fce7f3;border-radius:8px;overflow:hidden}
+.dot-progress__bar span{display:block;height:100%;width:0;background:linear-gradient(270deg,#f472b6,#db2777);transition:width .3s}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>پیش نمایش پوسته دیجی کالا — مرزگارد</title>
+  <link rel="stylesheet" href="../frontend/dist/marzgard-digikala.css">
+  <style>body{margin:0;background:#f2f2f2}</style>
+</head>
+<body>
+  <!-- شبیه سازی خروجی شورت کد [marzgard_digikala] -->
+  <div id="marzgard-digikala-1" class="marzgard-digikala" data-marzgard-digikala="1"
+       style="--dk-red:#e60023"
+       data-title="ورود یا ثبتنام در دیجیکالا"
+       data-subtitle="لطفا شماره موبایل یا ایمیل خود را وارد کنید"
+       data-placeholder="912 345 6789"
+       data-button="ورود دیجیکالا"
+       data-otp-title="تایید شماره موبایل"
+       data-otp-button="تایید و ورود"
+       data-terms="ورود به معنای پذیرش شرایط و قوانین حریم خصوصی است"
+       data-show-logo="1"></div>
+
+  <script>window.MARZGARD={restUrl:'/marzgard/v1',nonce:'preview',assetsUrl:'../assets/',version:'1.0.0',isAdmin:false};</script>
+  <script src="../frontend/dist/vendor/vue.global.prod.js"></script>
+  <script>
+    window.fetch = function () {
+      return Promise.resolve({ ok:true, status:200, json:function(){
+        return Promise.resolve({ success:true, message:'کد تأیید ارسال شد.', challenge:'preview', ttl:300, masked:'0912•••789', dev_code:'123456' });
+      }});
+    };
+  </script>
+  <script src="../frontend/dist/marzgard-digikala.js"></script>
+</body>
+</html>

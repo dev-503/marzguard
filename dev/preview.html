@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>پیش نمایش طراحی — مرزگارد</title>
+  <link rel="stylesheet" href="../frontend/dist/marzgard-public.css">
+  <style>
+    body { margin: 0; background: #eef3f3; font-family: 'Arad', sans-serif; }
+    .preview-bar { background:#0b3b3b; color:#fff; padding:10px 16px; font-size:12px; display:flex; gap:12px; align-items:center }
+    .preview-bar a { color:#7ff0e0 }
+  </style>
+</head>
+<body>
+  <div class="preview-bar">
+    <strong>پیش نمایش طراحی مرزگارد</strong>
+    <a href="#" id="theme-light">تم روشن</a>
+    <a href="#" id="theme-dark">تم تاریک</a>
+    <span>کد توسعه به صورت خودکار نمایش داده می شود.</span>
+  </div>
+
+  <div id="marzgard-app" data-marzgard-form data-mode=""></div>
+
+  <script>
+    window.MARZGARD = { restUrl: '/marzgard/v1', nonce: 'preview', assetsUrl: '../assets/', version: '1.0.0', isAdmin: false };
+  </script>
+  <script src="../frontend/dist/vendor/vue.global.prod.js"></script>
+  <script>
+    // Mock REST layer for static preview.
+    var s = {
+      brand: 'مرزگارد', tagline: 'ورود امن به حساب کاربری', mode: 'login_register', register: true,
+      otp_length: 6,
+      countries: [
+        {code:'+98',name:'ایران',flag:'🇮🇷',iso:'IR'},{code:'+1',name:'آمریکا',flag:'🇺🇸',iso:'US'},
+        {code:'+44',name:'انگلستان',flag:'🇬🇧',iso:'GB'},{code:'+971',name:'امارات متحده عربی',flag:'🇦🇪',iso:'AE'},
+        {code:'+90',name:'ترکیه',flag:'🇹🇷',iso:'TR'},{code:'+49',name:'آلمان',flag:'🇩🇪',iso:'DE'}
+      ],
+      strings: {
+        login_title:'ورود به حساب', register_title:'ایجاد حساب جدید',
+        login_subtitle:'شماره موبایل خود را وارد کنید تا کد تأیید ارسال شود.',
+        register_subtitle:'با شماره موبایل خود به سادگی عضو شوید.',
+        otp_title:'کد تأیید را وارد کنید', otp_subtitle:'کد ۶ رقمی ارسال‌شده به شماره %s را وارد نمایید.',
+        phone_label:'شماره موبایل', phone_placeholder:'9123456789', country_label:'کشور', search_country:'جستجوی کشور…',
+        continue:'ادامه', sending:'در حال ارسال کد…', verify:'تأیید و ورود', verifying:'در حال بررسی…',
+        resend:'ارسال مجدد کد', resend_in:'ارسال مجدد تا %s ثانیه', change_number:'تغییر شماره',
+        remember_me:'مرا به خاطر بسپار', login_tab:'ورود', register_tab:'ثبت نام',
+        login_success:'با موفقیت وارد شدید.', register_success:'حساب شما با موفقیت ایجاد شد.',
+        err_empty_phone:'لطفاً شماره موبایل را وارد کنید.', err_invalid_phone:'شماره موبایل معتبر نیست.',
+        err_empty_otp:'لطفاً کد تأیید را وارد کنید.', err_invalid_otp:'کد تأیید نادرست است.',
+        err_generic:'خطایی رخ داد. لطفاً دوباره تلاش کنید.', terms:'با ادامه دادن، شما با <a href="#">شرایط و قوانین</a> موافقت می کنید.',
+        powered_by:'امن شده با مرزگارد'
+      },
+      appearance: { primary:'#009595', radius:12, darkMode:'auto', fontSize:14 }
+    };
+
+    var realFetch = window.fetch;
+    window.fetch = function (url, opts) {
+      opts = opts || {};
+      var path = String(url).replace(/^\/marzgard\/v1/, '');
+      var body = {};
+      try { body = JSON.parse(opts.body || '{}'); } catch (e) {}
+      var payload;
+
+      if (path === '/config') { payload = s; }
+      else if (path === '/otp/send') {
+        payload = { success:true, message:'کد تأیید ارسال شد.', challenge:'preview-challenge', ttl:300, masked:'+98 9•••••6789', dev_code:'123456' };
+      } else if (path === '/otp/resend') {
+        payload = { success:true, message:'کد جدید ارسال شد.', ttl:300, dev_code:'123456' };
+      } else if (path === '/otp/verify') {
+        payload = (body.otp === '123456')
+          ? { success:true, message: body.purpose === 'register' ? s.strings.register_success : s.strings.login_success, redirect:'', created:false }
+          : { success:false, message:s.strings.err_invalid_otp };
+      } else { payload = { success:false, message:'not found' }; }
+
+      return Promise.resolve({
+        ok: payload.success !== false,
+        status: payload.success === false ? 400 : 200,
+        json: function () { return Promise.resolve(payload); }
+      });
+    };
+
+    document.getElementById('theme-light').onclick = function (e) { e.preventDefault(); document.getElementById('marzgard-app').setAttribute('data-mg-theme','light'); };
+    document.getElementById('theme-dark').onclick = function (e) { e.preventDefault(); document.getElementById('marzgard-app').setAttribute('data-mg-theme','dark'); };
+  </script>
+  <script src="../frontend/dist/marzgard-public.js"></script>
+</body>
+</html>
